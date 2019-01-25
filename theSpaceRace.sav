@@ -1,0 +1,788 @@
+//name: Shaziah Gafur
+//passwords will be something related to the previous stage's activity
+//make list of passwords here
+
+/*problems with code:
+-Minesweeper: user cannot choose level
+-Snakes & Ladders: not everything is aligned
+-story isn't finished
+*/
+import javax.swing.*;
+import java.applet.Applet;
+import java.awt.*;
+import java.awt.event.*;
+public class theSpaceRace extends Applet implements ActionListener
+{
+    Panel panel;
+    int player;
+    int computer;
+    int turn = 1;
+    Panel card1, card2, card3, card4, card7, card8, stage1, stage2, stage3, stage4, stage5, stage6, stage7, stage8, Minesweeper;
+    JPasswordField p, c;
+    JTextArea yourTurn;
+    JButton b[];
+    Panel m;
+    boolean win;
+    CardLayout cdLayout = new CardLayout ();
+    JTextArea rolled;
+    int num;
+    JLabel a[] = new JLabel [100];
+    JButton Continue;
+    JButton dice;
+    JTextArea location;
+    JComboBox minLevels;
+    String minLevels_s;
+    String level = "Easy";
+
+    public void init ()
+    {
+	resize (700, 600);
+	panel = new Panel ();
+	panel.setLayout (cdLayout);
+	home ();
+	story1 ();
+	story2 ();
+	story3 ();
+	game ();
+	More ();
+	Stage1 ();
+
+	Minesweeper ();
+	Stage2 ();
+	Stage3 ();
+	Stage4 ();
+	Stage5 ();
+	Stage6 ();
+	Stage7 ();
+	Stage8 ();
+	setLayout (new BorderLayout ());
+	add ("Center", panel);
+
+    }
+
+
+    public void home ()
+    {
+	card1 = new Panel ();
+	card1.setBackground (Color.black);
+	JLabel img = new JLabel (createImageIcon ("homescreen.jpg"));
+	JButton play = new JButton (createImageIcon ("play.jpg"));
+	JButton more = new JButton (createImageIcon ("More_games.jpg"));
+	play.setPreferredSize (new Dimension (150, 123));
+	play.addActionListener (this);
+	play.setActionCommand ("play");
+	more.addActionListener (this);
+	more.setActionCommand ("more");
+	more.setPreferredSize (new Dimension (150, 126));
+	card1.add (img);
+	card1.add (play);
+	card1.add (more);
+	panel.add ("home", card1);
+
+
+    }
+
+
+    public void story1 ()
+    {
+	card2 = new Panel ();
+	card2.setBackground (Color.black);
+	JLabel img = new JLabel (createImageIcon ("story1.jpg"));
+	card2.add (img);
+	JTextArea text = new JTextArea ("                                        There once was an astronaut named                          \n                                        Bob. He was travelling through space.                                         \n\n");
+	text.setBackground (Color.black);
+	text.setForeground (Color.white);
+	text.setFont (new Font ("Corbel", Font.PLAIN, 20));
+	card2.add (text);
+	JButton next = new JButton (createImageIcon ("Next.jpg"));
+	next.setPreferredSize (new Dimension (60, 42));
+	next.addActionListener (this);
+	next.setActionCommand ("next1");
+	JButton skip = new JButton (createImageIcon ("Skip.jpg"));
+	skip.setPreferredSize (new Dimension (60, 41));
+	skip.addActionListener (this);
+	skip.setActionCommand ("skip");
+	card2.add (skip);
+	card2.add (next);
+	panel.add ("story1", card2);
+    }
+
+
+    public void story2 ()
+    {
+	card3 = new Panel ();
+	card3.setBackground (Color.black);
+	JLabel img = new JLabel (createImageIcon ("story2.jpg"));
+	card3.add (img);
+	JTextArea text = new JTextArea ("                               He accidentally entered a worm hole.                                                        ");
+	text.setBackground (Color.black);
+	text.setForeground (Color.white);
+	text.setFont (new Font ("Corbel", Font.PLAIN, 20));
+	card3.add (text);
+	JButton next = new JButton (createImageIcon ("Next.jpg"));
+	next.setPreferredSize (new Dimension (60, 42));
+	next.addActionListener (this);
+	next.setActionCommand ("next2");
+	JButton back = new JButton (createImageIcon ("Back.jpg"));
+	back.setPreferredSize (new Dimension (60, 41));
+	back.addActionListener (this);
+	back.setActionCommand ("back1");
+	card3.add (back);
+	card3.add (next);
+	panel.add ("story2", card3);
+    }
+
+
+    public void story3 ()
+    {
+	card4 = new Panel ();
+	card4.setBackground (Color.black);
+	JLabel img = new JLabel (createImageIcon ("story3.jpg"));
+	card4.add (img);
+	JTextArea text = new JTextArea ("                                  His spaceship crashed                                                        ");
+	text.setBackground (Color.black);
+	text.setForeground (Color.white);
+	text.setFont (new Font ("Corbel", Font.PLAIN, 20));
+	card3.add (text);
+	JButton next = new JButton (createImageIcon ("Next.jpg"));
+	next.setPreferredSize (new Dimension (60, 42));
+	next.addActionListener (this);
+	next.setActionCommand ("next3");
+	JButton back = new JButton (createImageIcon ("Back.jpg"));
+	back.setPreferredSize (new Dimension (60, 41));
+	back.addActionListener (this);
+	back.setActionCommand ("back2");
+	card3.add (back);
+	card3.add (next);
+	panel.add ("story3", card4);
+    }
+
+
+    public void Stage1 ()
+    {
+	stage1 = new Panel ();
+	JLabel enter = new JLabel ("Enter the password:");
+	stage1.setBackground (new Color (50, 83, 200));
+	c = new JPasswordField (10);
+	JButton done = new JButton ("Done");
+	done.setActionCommand ("done1");
+	done.addActionListener (this);
+	stage1.add (enter);
+	stage1.add (c);
+	stage1.add (done);
+	panel.add ("stage1", stage1);
+    }
+
+
+    public String chooseLevel ()
+    {
+	JOptionPane.showMessageDialog (null, "Welcome", "Welcome", JOptionPane.INFORMATION_MESSAGE);
+	String[] levels = {"Easy", "Medium", "Hard"};
+	level = (String) JOptionPane.showInputDialog (null,
+		"Choose a level", "Input", JOptionPane.INFORMATION_MESSAGE, null,
+		levels, levels [0]);
+
+	cdLayout.show (panel, "Minesweeper");
+	return level;
+    }
+
+
+    public void Minesweeper ()
+    {Button instructions = new JButton ("How to Play");
+	instructions.addActionListener (this);
+	instructions.setActionCommand ("MinesweeperInstructions");
+	Minesweeper.add (instructions);
+	int x;
+	if (level.equals ("Easy"))
+	    x = 10;
+	else if (level.equals ("Medium"))
+	    x = 15;
+	else //if (chosen=='h')
+	    x = 20;
+	m = new Panel (new GridLayout (x, x));
+	JButton b[] = new JButton [x * x];
+	for (int i = 0 ; i < b.length ; i++)
+	{
+	    b [i] = new JButton (" ");
+	    b [i].setActionCommand ("Min" + i);
+	    b [i].addActionListener (this);
+	    m.add (b [i]);
+	}
+	Minesweeper.add (m);
+	//  int c[] = selectNum (x, 100);
+	panel.add ("Minesweeper", Minesweeper);
+    }
+
+
+    /*  public int[] selectNum (int val)
+      {
+	  int array[] = new int [val]; //five numbers
+	  for (int i = 1 ; i < val ; i++)
+	      array [i] = (int) (Math.random () * 10 + 1); //between 1 and 10
+
+	  while (dome == false)
+	  {
+	      array [pos] = (int) (Math.random () * 10 + 1); //between 1 and 10
+	      pos = -1;
+	      for (int i = 0 ; i < val ; i++) //searches for duplicates in the array
+	      {
+		  for (int j = i + 1 ; j < val ; j++)
+		      if (array [j] == array [i])
+		      {
+			  pos = j;
+			  break; //not neccessary but makes the code more efficient
+		      }
+	      }
+	      if (pos == -1) //if there are no duplicates
+		  dome = true;
+	  }
+	  return array;
+      }*/
+
+
+    public void Stage2 ()
+    {
+	stage2 = new Panel ();
+	JLabel enter = new JLabel ("Enter the password:");
+	stage2.setBackground (new Color (50, 83, 200));
+	p = new JPasswordField (10);
+	stage2.add (enter);
+	stage2.add (p);
+	JButton done = new JButton ("Done");
+	done.setActionCommand ("done2");
+	done.addActionListener (this);
+	stage2.add (done);
+	panel.add ("stage2", stage2);
+    }
+
+
+    public void Stage3 ()
+    {
+	stage3 = new Panel ();
+	panel.add ("stage3", stage3);
+    }
+
+
+    public void Stage4 ()
+    {
+	stage4 = new Panel ();
+	panel.add ("stage4", stage4);
+    }
+
+
+    public void Stage5 ()
+    {
+	stage5 = new Panel ();
+	panel.add ("stage5", stage5);
+    }
+
+
+    public void Stage6 ()
+    {
+	stage6 = new Panel ();
+	panel.add ("stage6", stage6);
+    }
+
+
+    public void Stage7 ()
+    {
+	stage7 = new Panel ();
+	panel.add ("stage7", stage7);
+    }
+
+
+    public void Stage8 ()
+    {
+	stage8 = new Panel ();
+	panel.add ("stage8", stage8);
+    }
+
+
+    public void More ()
+    {
+	card8 = new Panel ();
+	JButton a[] = new JButton [8];
+	for (int i = 0 ; i < a.length ; i++)
+	{
+	    a [i] = new JButton ("Stage " + (i + 1));
+	    a [i].setActionCommand ("stage" + (i + 1));
+	    a [i].addActionListener (this);
+	    card8.add (a [i]);
+	}
+	panel.add ("more", card8);
+    }
+
+
+    public void game ()
+    {
+	card7 = new Panel ();
+	player = 1;
+	computer = 1;
+	card7.setBackground (Color.black);
+	win = false;
+	Panel p = new Panel (new GridLayout (10, 10));
+	JLabel title = new JLabel ("                                 Rockets & UFOs                                           ");
+	title.setFont (new Font ("Britannic Bold", Font.PLAIN, 30));
+	title.setForeground (Color.white);
+	card7.add (title);
+	int n = 0;
+	for (int i = 0 ; i < 10 ; i++)
+	{
+	    for (int j = 0 ; j < 10 ; j++)
+	    {
+		a [n] = new JLabel (createImageIcon ("boards2 [www.imagesplitter.net]-" + i + "-" + j + ".jpeg"));
+		a [n].setPreferredSize (new Dimension (40, 40));
+		p.add (a [n]);
+		n++;
+	    }
+	}
+	a [90].setIcon (createImageIcon ("bobbyicon.jpg"));
+	location = new JTextArea ("Your score: " + player + "   Aliens' score: " + computer);
+	location.setFont (new Font ("Times New Roman", Font.PLAIN, 20));
+	location.setForeground (new Color (137, 172, 237));
+	location.setBackground (Color.black);
+	yourTurn = new JTextArea ("             ");
+	yourTurn.setFont (new Font ("Corbel", Font.PLAIN, 15));
+	yourTurn.setBackground (Color.black);
+	yourTurn.setForeground (Color.white);
+	card7.add (yourTurn);
+	rolled = new JTextArea ("Click on the dice to roll");
+	rolled.setPreferredSize (new Dimension (100, 100));
+	rolled.setFont (new Font ("Times New Roman", Font.PLAIN, 20));
+	rolled.setBackground (Color.black);
+	rolled.setForeground (new Color (137, 172, 237));
+	dice = new JButton (createImageIcon ("dice.jpg"));
+	dice.setPreferredSize (new Dimension (100, 100));
+	dice.setActionCommand ("roll");
+	dice.addActionListener (this);
+	Continue = new JButton ("Continue");
+	Continue.setEnabled (false);
+	Continue.setActionCommand ("continue");
+	Continue.addActionListener (this);
+	card7.add (Continue);
+	card7.add (p);
+	card7.add (dice);
+	card7.add (Continue);
+	card7.add (location);
+	card7.add (rolled);
+	panel.add ("game", card7);
+
+
+
+
+
+    }
+
+
+    public void BtoPic (int n)
+    {
+	a [n].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-" + n / 10 + "-" + n % 10 + ".jpeg"));
+
+    }
+
+
+    /*    public int AtoB (int n)  //computer to user
+	{
+	    int x = 9 - (n / 10);
+	    if (x % 2 == 0)
+	    {
+		x *= 10;
+		x += (n % 10) + 1;
+	    }
+	    else
+	    {
+		x *= 10;
+		x += (10 - (n % 10));
+	    }
+	    return x;
+	}
+    */  //not neccessary
+
+    public int BtoA (int n)  //user to computer
+    {
+	int x = 9 - ((n - 1) / 10);
+	if (x % 2 == 1)
+	{
+	    x *= 10;
+	    x += (n - 1) % 10;
+	}
+	else
+	{
+	    x *= 10;
+	    if (n % 10 != 0)
+		x += (10 - (n % 10));
+
+	}
+	return x;
+    }
+
+
+    public void checkCPU (int n)
+    {
+	if (n == 7)
+	{
+	    a [96].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-9-6.jpeg"));
+	    a [75].setIcon (createImageIcon ("alien.jpg"));
+	    computer = 26;
+	    yourTurn.setText ("The aliens advanced up a UFO.");
+	}
+	else if (n == 18)
+	{
+	    a [82].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-8-2.jpeg"));
+	    a [61].setIcon (createImageIcon ("alien.jpg"));
+	    computer = 39;
+	    yourTurn.setText ("The aliens advanced up a UFO.");
+	}
+	else if (n == 25)
+	{
+	    a [74].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-7-4.jpeg"));
+	    a [83].setIcon (createImageIcon ("alien.jpg"));
+	    computer = 17;
+	    yourTurn.setText ("The aliens slid down a rocket.");
+	}
+	else if (n == 48)
+	{
+	    a [57].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-5-7.jpeg"));
+	    a [86].setIcon (createImageIcon ("alien.jpg"));
+	    computer = 14;
+	    yourTurn.setText ("The aliens slid down a rocket.");
+	}
+	else if (n == 36)
+	{
+	    a [64].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-6-4.jpeg"));
+	    a [36].setIcon (createImageIcon ("alien.jpg"));
+	    computer = 67;
+	    yourTurn.setText ("The aliens advanced up a UFO .");
+	}
+	else if (n == 32)
+	{
+	    a [68].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-6-8.jpeg"));
+	    a [38].setIcon (createImageIcon ("alien.jpg"));
+	    computer = 69;
+	    yourTurn.setText ("The aliens advanced up a UFO.");
+	}
+	else if (n == 76)
+	{
+	    a [24].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-2-4.jpeg"));
+	    a [50].setIcon (createImageIcon ("alien.jpg"));
+	    computer = 41;
+	    yourTurn.setText ("The aliens slid down a rocket.");
+	}
+	else if (n == 78)
+	{
+	    a [22].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-2-2.jpeg"));
+	    a [3].setIcon (createImageIcon ("alien.jpg"));
+	    computer = 97;
+	    yourTurn.setText ("The aliens advanced up a UFO.");
+	}
+	else if (n == 86)
+	{
+	    a [15].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-1-5.jpeg"));
+	    a [27].setIcon (createImageIcon ("alien.jpg"));
+	    computer = 73;
+	    yourTurn.setText ("The aliens slid down a rocket.");
+	}
+	else
+	    yourTurn.setText (" ");
+    }
+
+
+    public void checkUser (int n)
+    {
+	if (n == 7 || n == 18 || n == 76 || n == 32 || n == 78)
+	{
+	    Continue.setEnabled (true);
+	    dice.setEnabled (false);
+	    yourTurn.setText ("You approached a UFO");
+	}
+	else if (n == 25 || n == 48 || n == 36 || n == 86)
+	{
+	    Continue.setEnabled (true);
+	    dice.setEnabled (false);
+	    yourTurn.setText ("You approached a rocket");
+	}
+    }
+
+
+    public void Switch (int n)
+    {
+	if (n == 7)
+	{
+	    a [96].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-9-6.jpeg"));
+	    a [75].setIcon (createImageIcon ("bobbyicon.jpg"));
+	    player = 26;
+	    yourTurn.setText ("You advanced up a UFO.");
+	}
+	else if (n == 18)
+	{
+	    a [82].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-8-2.jpeg"));
+	    a [61].setIcon (createImageIcon ("bobbyicon.jpg"));
+	    player = 39;
+	    yourTurn.setText ("You advanced up a UFO.");
+	}
+	else if (n == 25)
+	{
+	    a [74].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-7-4.jpeg"));
+	    a [83].setIcon (createImageIcon ("bobbyicon.jpg"));
+	    player = 17;
+	    yourTurn.setText ("You slid down a rocket.");
+	}
+	else if (n == 48)
+	{
+	    a [57].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-5-7.jpeg"));
+	    a [86].setIcon (createImageIcon ("bobbyicon.jpg"));
+	    player = 14;
+	    yourTurn.setText ("You slid down a rocket.");
+	}
+	else if (n == 36)
+	{
+	    a [64].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-6-4.jpeg"));
+	    a [36].setIcon (createImageIcon ("bobbyicon.jpg"));
+	    player = 67;
+	    yourTurn.setText ("You slid down a rocket.");
+	}
+	else if (n == 32)
+	{
+	    a [68].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-6-8.jpeg"));
+	    a [38].setIcon (createImageIcon ("bobbyicon.jpg"));
+	    player = 69;
+	    yourTurn.setText ("You advanced up a UFO.");
+	}
+	else if (n == 76)
+	{
+	    a [24].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-2-4.jpeg"));
+	    a [50].setIcon (createImageIcon ("bobbyicon.jpg"));
+	    player = 41;
+	    yourTurn.setText ("You advanced up a UFO.");
+	}
+	else if (n == 78)
+	{
+	    a [22].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-2-2.jpeg"));
+	    a [3].setIcon (createImageIcon ("bobbyicon.jpg"));
+	    player = 97;
+	    yourTurn.setText ("You advanced up a UFO.");
+	}
+	else
+	{
+	    a [15].setIcon (createImageIcon ("boards2 [www.imagesplitter.net]-1-5.jpeg"));
+	    a [27].setIcon (createImageIcon ("bobbyicon.jpg"));
+	    player = 73;
+	    yourTurn.setText ("You slid down a rocket.");
+	}
+	dice.setEnabled (true);
+	Continue.setEnabled (false);
+    }
+
+
+    public void actionPerformed (ActionEvent e)
+    {
+	if (e.getActionCommand ().equals ("play") || e.getActionCommand ().equals ("back1"))
+	    cdLayout.show (panel, "story1");
+	else if (e.getActionCommand ().equals ("back2"))
+	    cdLayout.show (panel, "story2");
+	else if (e.getActionCommand ().equals ("more"))
+	    cdLayout.show (panel, "more");
+	/*   else if (e.getActionCommand ().equals ("MinLevel"))
+	   {
+	       JComboBox cb = (JComboBox) e.getSource ();
+	       minLevels_s = (String) cb.getSelectedItem ();
+	       String[] levels = {"Easy", "Medium", "Hard"};
+	       level = (String) JOptionPane.showInputDialog (null,
+		       "Choose a level", "Input", JOptionPane.INFORMATION_MESSAGE, null,
+		       levels, levels [0]);
+	       if (level.equals ("Hard"))
+		   chosen = 'h';
+	       else if (level.equals ("Medium"))
+		   chosen= 'm';
+	       else //if (minLevels_s.equals("Easy"))
+		   chosen = 'e';
+	       cdLayout.show (panel, "Minesweeper");
+	   }*/
+	else if (e.getActionCommand ().equals ("MinesweeperInstructions"))
+	{
+	    JOptionPane.showMessageDialog (null, "* * * M I N E S W E E P E R * * * \n \n"
+		    + "You are presented with a board of squares.\n"
+		    + "Some squares are black holes, others aren't.\n"
+		    + "If you click on a black hole, you lose. The\n"
+		    + "object of the game is to uncover all of the\n"
+		    + "squares that are not black holes. Clicking a\n"
+		    + "square which doesn't have a black hole reveals\n"
+		    + "the number of neighbouring squares containing\n"
+		    + "black holes. Use this information plus some\n"
+		    + "guess work to avoid the black holes", "How to play", JOptionPane.QUESTION_MESSAGE);
+	}
+	else if (e.getActionCommand ().equals ("done1"))
+	{
+	    if (c.getText ().equals ("yolo"))
+		cdLayout.show (panel, "Minesweeper");
+	chooseLevel();  JOptionPane.showMessageDialog (null, "Complete Stage 1 before starting this activity", "Incorrect Log in", JOptionPane.ERROR_MESSAGE);
+		c.setText ("");
+	    }
+	}
+	else if (e.getActionCommand ().equals ("done2"))
+	{
+	    if (p.getText ().equals ("n"))
+		cdLayout.show (panel, "Minesweeper");
+	chooseLevel();  JOptionPane.showMessageDialog (null, "Complete Stage 2 before starting this activity", "Incorrect Log in", JOptionPane.ERROR_MESSAGE);
+		p.setText ("");
+	    }
+	}
+	else if (e.getActionCommand ().equals ("skip"))
+	{
+	    cdLayout.show (panel, "game");
+	    JOptionPane.showMessageDialog (null, "* * * I N S T R U C T I O N S * * * \n \n"
+		    + "Help Bobby get to planet Earth before\n"
+		    + "the aliens do! The object of the game\n"
+		    + "is to reach the 100th square before\n"
+		    + "they do. Take turns with the aleins\n"
+		    + "rolling the dice. The number that you\n"
+		    + "roll is the number of spaces that you\n"
+		    + "may advance. If you land on a UFO,\n"
+		    + "you can proceed to where the rocket\n"
+		    + "leads you. If you land on a rocket,\n"
+		    + "you have to move back where the rocket\n"
+		    + "takes you, unless if you can correctly\n"
+		    + "answer a trivia question. Save the \n"
+		    + "world before it's too late!", "Instructions", JOptionPane.QUESTION_MESSAGE);
+	}
+
+	else if (e.getActionCommand ().equals ("next1"))
+	    cdLayout.show (panel, "story2");
+	else if (e.getActionCommand ().equals ("next2"))
+	    cdLayout.show (panel, "story3");
+	else if (e.getActionCommand ().equals ("stage1"))
+	    cdLayout.show (panel, "stage1");
+	else if (e.getActionCommand ().equals ("stage2"))
+	    cdLayout.show (panel, "stage2");
+	else if (e.getActionCommand ().equals ("stage3"))
+	    cdLayout.show (panel, "stage3");
+	else if (e.getActionCommand ().equals ("stage4"))
+	    cdLayout.show (panel, "stage4");
+	else if (e.getActionCommand ().equals ("stage5"))
+	    cdLayout.show (panel, "stage5");
+	else if (e.getActionCommand ().equals ("stage6"))
+	    cdLayout.show (panel, "stage6");
+	else if (e.getActionCommand ().equals ("stage7"))
+	    cdLayout.show (panel, "stage7");
+	else if (e.getActionCommand ().equals ("stage8"))
+	    cdLayout.show (panel, "stage8");
+	else if (e.getActionCommand ().equals ("roll"))
+	{
+	    num = (int) (Math.random () * 6 + 1);
+	    rolled.setText ("You rolled a " + num);
+
+	    if (turn == 1)
+	    {
+		if (player != computer)
+		    BtoPic (BtoA (player));
+		else
+		    a [BtoA (player)].setIcon (createImageIcon ("alien.jpg"));
+		player += num;
+		if (player < 100)
+		{
+		    a [BtoA (player)].setIcon (createImageIcon ("bobbyicon.jpg"));
+		    checkUser (player);
+		    turn = 2;
+		}
+		else //if the user won
+		{
+		    win = true;
+		    yourTurn.setText ("You Won");
+		    a [0].setIcon (createImageIcon ("bobbyicon.jpg"));
+		    JOptionPane.showMessageDialog (null, "~ ~ ~ C O N G R A T U L A T I O N S ~ ~ ~\n \n"
+			    + "You saved planet Earth and stopped the aliens!", "You Won", JOptionPane.QUESTION_MESSAGE);
+		    yourTurn.setText ("You won!");
+		    Continue.setText ("Play Again?");
+		    Continue.setEnabled (true);
+		    Continue.setActionCommand ("again");
+		    showStatus ("We have a winner!");
+		    dice.setIcon (null);
+		    dice.setText ("More Games");
+		    dice.setActionCommand ("more");
+		    dice.setPreferredSize (new Dimension (150, 126));
+		}
+
+	    }
+	    else
+	    {
+		if (player != computer)
+		    BtoPic (BtoA (computer));
+		else
+		    a [BtoA (player)].setIcon (createImageIcon ("bobbyicon.jpg"));
+		computer += num;
+		if (computer < 100)
+		{
+		    a [BtoA (computer)].setIcon (createImageIcon ("alien.jpg"));
+		    checkCPU (computer);
+		    turn = 1;
+
+		}
+		else //if the aliens won
+		{
+		    yourTurn.setText ("You Lost");
+		    a [0].setIcon (createImageIcon ("alien.jpg"));
+		    JOptionPane.showMessageDialog (null, "~ ~ ~ G A M E   O V E R ~ ~ ~\n \n"
+			    + "The aliens won!", "You Lost", JOptionPane.QUESTION_MESSAGE);
+
+		    yourTurn.setText ("The Alien won!");
+		    Continue.setText ("Play Again?");
+		    Continue.setEnabled (true);
+		    Continue.setActionCommand ("again");
+		    showStatus ("We have a winner!");
+		    dice.setText ("More Games");
+		    dice.setActionCommand ("more");
+		}
+
+	    }
+	    location.setText ("Your score: " + player + "   Aliens' score: " + computer);
+	    showStatus ("Dice roll: " + num);
+
+	}
+
+
+	else if (e.getActionCommand ().equals ("continue"))
+	{
+	    Switch (player);
+	    turn = 2;
+	}
+
+
+	else if (e.getActionCommand ().equals ("again"))
+	{
+	    BtoPic (BtoA (player));
+	    BtoPic (BtoA (computer));
+	    player = 1;
+	    computer = 1;
+	    yourTurn.setText ("");
+	    a [90].setIcon (createImageIcon ("bobbyicon.jpg"));
+	    dice.setIcon (createImageIcon ("dice.jpg"));
+	    dice.setActionCommand ("roll");
+	    dice.setPreferredSize (new Dimension (100, 100));
+	    Continue.setText ("Continue");
+	    Continue.setEnabled (false);
+	    Continue.setActionCommand ("continue");
+	    showStatus (" ");
+	    location = new JTextArea ("Your score: " + player + "   Aliens' score: " + computer);
+
+	}
+    }
+
+
+    protected static ImageIcon createImageIcon (String path)
+    {
+	java.net.URL imgURL = theSpaceRace.class.getResource (path);
+	if (imgURL != null)
+	{
+	    return new ImageIcon (imgURL);
+	}
+
+
+	else
+	{
+	    System.err.println ("Couldn't find file: " + path);
+	    return null;
+	}
+    }
+}
+
+
